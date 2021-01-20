@@ -18,7 +18,7 @@ _RUNNER_GROUP=${RUNNER_GROUP:-Default}
 _SHORT_URL=${REPO_URL}
 
 if [[ ${ORG_RUNNER} == "true" ]]; then
-  _SHORT_URL="https://github.com/${ORG_NAME}"
+  _SHORT_URL="https://${GITHUB_SERVER:-github.com}/${ORG_NAME}"
 fi
 
 if [[ -n "${ACCESS_TOKEN}" ]]; then
@@ -41,4 +41,8 @@ echo "Configuring"
 unset RUNNER_TOKEN
 trap deregister_runner SIGINT SIGQUIT SIGTERM
 
-./bin/runsvc.sh
+if [[ -n ${RUNONCE} ]]; then
+    ./run.sh --once
+else
+    ./bin/runsvc.sh
+fi
