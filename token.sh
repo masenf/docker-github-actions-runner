@@ -3,6 +3,10 @@
 _ORG_RUNNER=${ORG_RUNNER:-false}
 
 URI=https://api.github.com
+if [[ -n ${GITHUB_SERVER} ]]; then
+    # github enterprise
+    URI=https://${GITHUB_SERVER}/api
+fi
 API_VERSION=v3
 API_HEADER="Accept: application/vnd.github.${API_VERSION}+json"
 AUTH_HEADER="Authorization: token ${ACCESS_TOKEN}"
